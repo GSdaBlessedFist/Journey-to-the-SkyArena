@@ -1,0 +1,50 @@
+@import '../../../../../app/mixins';
+
+.sceneWrapper {
+  @apply w-full h-screen;
+  & .sceneGrid {
+    @apply grid grid-cols-[1fr_1fr] h-screen;
+    // @include b();
+    & .placardSection {
+      @apply relative top-40 w-full h-screen p-8 flex justify-center items-start bg-transparent;
+      // @include b();
+    }
+  }
+}
+.placardContainer {
+  @apply flex flex-wrap justify-center items-center w-[644px] min-w-[400px] max-h-[275px]  aspect-[644/475];
+  //@include b(5px, orange, dashed);
+
+  .rows {
+    @apply w-full flex justify-end items-center;
+    // @include b();
+  }
+  .leftSide {
+    @apply w-5/6 flex justify-end items-center pr-6;
+  }
+  .iconContainer {
+    @apply w-1/5 flex justify-center items-center;
+    // @include b();
+    & > *:not([data-word='begin']) {
+      @apply drop-shadow-[4px_5px_1px_rgb(255,255,255,0.25)];
+    }
+  }
+  .titleBig {
+    @apply font-bangers leading-none text-white ;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    filter: drop-shadow(4px 8px 1px rgb(255, 255, 255, 0.25));
+  }
+  .titleSmall {
+    @apply font-bangers leading-none text-white;
+    font-size: clamp(2.5rem, 4.625vw, 4.25rem);
+    filter: drop-shadow(4px 8px 1px rgb(255, 255, 255, 0.25));
+  }
+  .beginButton{
+    @apply rounded-full border-4 flex justify-center items-center p-3;
+    width: clamp(50px,100px,100px);
+    height: clamp(50px,100px,100px);
+    & .beginText{
+      @apply text-3xl font-bold text-white font-garamond;
+    }
+  }
+}
