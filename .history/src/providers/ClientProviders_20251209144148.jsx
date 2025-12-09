@@ -8,7 +8,7 @@ export default function ClientProviders({ children }) {
     <PortfolioProvider>
       <InstructionsProvider>
         {children}
-      </InstructionsProvider>
+      </InstructionProvider>
     </PortfolioProvider>
   )
 }

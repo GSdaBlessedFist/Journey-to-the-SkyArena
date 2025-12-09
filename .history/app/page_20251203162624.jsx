@@ -63,9 +63,9 @@ export default function Page() {
         </Suspense>
         
       </Canvas>
-      <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
 
       {/* Overlay UI */}
+      <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
 
       <Leva
         collapsed={false}

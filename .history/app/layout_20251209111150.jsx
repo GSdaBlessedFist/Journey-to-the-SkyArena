@@ -1,6 +1,6 @@
 import '@/global.css'
 import ClientProviders from '../src/providers/ClientProviders'
-import { InstructionProvider } from '../src/providers/InstructionsProvider'
+import { InstructionProvider } from '../src/providers/InstructionProvider'
 
 export const metadata = {
   title: 'Journey to the SkyArena',

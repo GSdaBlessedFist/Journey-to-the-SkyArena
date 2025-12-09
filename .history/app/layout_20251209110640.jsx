@@ -1,6 +1,7 @@
+"use client"
 import '@/global.css'
 import ClientProviders from '../src/providers/ClientProviders'
-import { InstructionProvider } from '../src/providers/InstructionsProvider'
+import { InstructionProvider } from '../src/providers/InstructionProvider'
 
 export const metadata = {
   title: 'Journey to the SkyArena',
@@ -11,7 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' className='antialiased'>
       <body>
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders>
+          <InstructionProvider>
+            {children}
+          </InstructionProvider>
+        </ClientProviders>
         <div id='overlay-root' />
         <div id='pip_layer-root' />
       </body>

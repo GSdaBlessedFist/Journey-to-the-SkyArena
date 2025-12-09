@@ -1,14 +1,12 @@
 'use client'
 
-import { InstructionsProvider } from './InstructionsProvider'
+import { InstructionProvider } from './InstructionProvider'
 import { PortfolioProvider } from './PortfolioProvider'
 
 export default function ClientProviders({ children }) {
   return (
     <PortfolioProvider>
-      <InstructionsProvider>
-        {children}
-      </InstructionsProvider>
+      <InstructionProvider>{children}</InstructionProvider>
     </PortfolioProvider>
   )
 }

@@ -14,9 +14,9 @@ const srcColor = [240, 76]
  */
 
 const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materials,actions},ref){
-  const {setInstructionsFor} = useInstructions();
+  const {setInstruction} = useInstruction();
   const api = useRef({})
-  const domain = 'hangar';
+
   // useEffect(()=>{
   //   p(SOURCE, 19, srcColor, actions)
   // },[actions])
@@ -67,11 +67,11 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
      //---------------------------------------------
      api.current.showLaunchPrompt = () => {
        p(SOURCE, 66, srcColor, 'SHOW PROMPT: Press button to launch blimp')
-       setInstructionsFor([domain,"blimpMove"])
+       setInstruction()
      }
 
      api.current.playCutscene = () => {}
-   }, [setInstructionsFor])
+   }, [setInstruction])
 
   //Expose API upward
   useImperativeHandle(ref, () => api.current)

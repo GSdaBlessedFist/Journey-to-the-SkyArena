@@ -62,8 +62,8 @@ export default function Page() {
           {sceneName === 'hangar' && <HangarSceneComposite />}
         </Suspense>
         
-      </Canvas>
       <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
+      </Canvas>
 
       {/* Overlay UI */}
 

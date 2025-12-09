@@ -3,7 +3,7 @@
 import { useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
 import * as THREE from "three";
 import p from '@/lib/helpers/consoleHelper'
-import { useInstructions } from '@/providers/InstructionsProvider';
+import { useInstruction } from '@/providers/InstructionProvider';
 
 const SOURCE = 'HangarOrcestrator.jsx'
 const srcColor = [240, 76]
@@ -14,9 +14,9 @@ const srcColor = [240, 76]
  */
 
 const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materials,actions},ref){
-  const {setInstructionsFor} = useInstructions();
+  const {setInstruction} = useInstruction();
   const api = useRef({})
-  const domain = 'hangar';
+
   // useEffect(()=>{
   //   p(SOURCE, 19, srcColor, actions)
   // },[actions])
@@ -67,11 +67,11 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
      //---------------------------------------------
      api.current.showLaunchPrompt = () => {
        p(SOURCE, 66, srcColor, 'SHOW PROMPT: Press button to launch blimp')
-       setInstructionsFor([domain,"blimpMove"])
+       setInstruction('Press LAUNCH to move the blimp out of the hangar')
      }
 
      api.current.playCutscene = () => {}
-   }, [setInstructionsFor])
+   }, [setInstruction])
 
   //Expose API upward
   useImperativeHandle(ref, () => api.current)

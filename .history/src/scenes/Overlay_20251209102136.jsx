@@ -12,7 +12,7 @@ export default function Overlay({ sceneName, timeSetting }) {
     <>
       <div className={className}>
         {sceneName === 'title' && <TitlePlacard timeSetting={timeSetting} />}
-        {sceneName === 'hangar' && <OnscreenInstruction sceneName={'hangar'} />}
+        {sceneName === 'hangar' && <OnscreenInstruction scene={'hangar'} />}
       </div>
     </>
   )

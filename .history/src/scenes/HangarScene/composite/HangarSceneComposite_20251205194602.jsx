@@ -39,7 +39,10 @@ export default function HangarSceneComposite(props) {
     // offsetZ: { value: 10, min: -150, max: 150, step: 0.1 },
   })
 
-
+useEffect(() => {
+    console.log('GLTF nodes:', Object.keys(nodes))
+  
+}, [nodes])
   
   /////////////////////////////////////////////////
   // Hangar lights
@@ -76,8 +79,8 @@ export default function HangarSceneComposite(props) {
         materials={materials}
         actions={actions}
         onLiftoff={() => {
-          if (orchestratorRef.current?.openHangarDoors) {
-            orchestratorRef.current.openHangarDoors()
+          if (orchestratorRef.current?.startLiftoffSequence) {
+            orchestratorRef.current.startLiftoffSequence()
           }
         }}
       />
