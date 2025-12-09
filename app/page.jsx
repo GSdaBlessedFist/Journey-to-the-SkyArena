@@ -10,7 +10,7 @@ import { LIGHTS, getTimeOfDay } from '../src/lib/helpers/getTimeOfDay'
 import Skybox from '@/scenes/sharedComponents/Skybox'
 import { a, useSpring } from '@react-spring/three'
 import { Leva } from 'leva'
-import Overlay from '@/scenes/Overlay'
+import Overlay from '@/scenes/sharedComponents/Overlay'
 
 const TitleSceneComposite = dynamic(() => import('../src/scenes/TitleScene/composite/TitleSceneComposite'), {
   ssr: false,

@@ -1,6 +1,6 @@
 // Overlay.jsx
-import TitlePlacard from '../scenes/TitleScene/components/TitlePlacard'
-import OnscreenInstruction from './sharedComponents/OnscreenInstruction'
+import TitlePlacard from '../TitleScene/components/TitlePlacard'
+import OnscreenInstruction from './OnscreenInstruction'
 
 
 export default function Overlay({ sceneName, timeSetting }) {
@@ -8,7 +8,10 @@ export default function Overlay({ sceneName, timeSetting }) {
     (sceneName === 'title') ?
      'absolute inset-0 select-none' :
      'absolute inset-0 select-none pointer-events-none'
-  return (
+  
+  
+  
+     return (
     <>
       <div className={className}>
         {sceneName === 'title' && <TitlePlacard timeSetting={timeSetting} />}

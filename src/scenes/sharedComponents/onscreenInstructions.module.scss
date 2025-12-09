@@ -1,0 +1,29 @@
+@use '../../../app/mixins.scss' as *;
+
+%overlay_grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  @include b(5px, red);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+%grid_cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.overlayGrid {
+  @extend %overlay_grid;
+}
+
+.hangar_blimpMove {
+  @extend %grid_cell;
+  background: transparent;
+  font-size: 1.2rem;
+  color: white;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-start: 3;
+}

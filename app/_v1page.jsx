@@ -10,7 +10,7 @@ import { getTimeOfDay } from '../src/lib/helpers/getTimeOfDay'
 import { useControls,Leva } from 'leva'
 
 import p from '@/lib/helpers/consoleHelper'
-import Overlay from '@/scenes/Overlay'
+import Overlay from '@/scenes/sharedComponents/Overlay'
 
 const SOURCE = 'page.jsx off'
 const srcColor = [130]

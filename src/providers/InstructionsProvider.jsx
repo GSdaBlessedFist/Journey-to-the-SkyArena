@@ -11,16 +11,16 @@ const InstructionsContext = createContext(null)
 
 export function InstructionsProvider({ children }) {
   const [instructionsFor, setInstructionsFor] = useState([])
-  const [activeInstruction,setActiveInstruction] = useState();
+  const [activeInstructionObj,setActiveInstructionObj] = useState();
 
   useEffect(() => {
     
-   setActiveInstruction(getNestedValue(instructionsMap,instructionsFor,"instruction"))
+   setActiveInstructionObj(instructionsMap?.[instructionsFor[0]]?.[instructionsFor[1]])
   }, [instructionsFor])
 
   const values = {
     setInstructionsFor,
-    activeInstruction
+    activeInstructionObj,// {instructions,styles}
   }
 
     return (

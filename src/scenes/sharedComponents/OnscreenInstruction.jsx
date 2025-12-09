@@ -1,18 +1,19 @@
-import { useInstructions } from "@/providers/InstructionsProvider";
-import { Html } from "@react-three/drei";
+import { useEffect, useState } from 'react'
+import { useInstructions } from '@/providers/InstructionsProvider'
+import styles from './onscreenInstructions.module.scss'
 
 function OnscreenInstruction({ sceneName }) {
-  const { activeInstruction } = useInstructions()
-
-  
+  const { activeInstructionObj } = useInstructions()
 
   return (
     <>
-      <div>
-        <div className='text-white text-xl'>{activeInstruction}</div>
-      </div>
+      {activeInstructionObj && (
+        <div className={styles.overlayGrid}>
+          <div className={styles[activeInstructionObj.styles]}>{activeInstructionObj.instruction}</div>
+        </div>
+      )}
     </>
   )
 }
 
-export default OnscreenInstruction;
+export default OnscreenInstruction
