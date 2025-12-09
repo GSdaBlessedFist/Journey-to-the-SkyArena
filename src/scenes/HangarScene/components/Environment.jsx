@@ -21,7 +21,7 @@ useFrame(({ clock }) => {
 
   return (
     <group {...props}>
-      <group name='COLLECTION_Environment' userData={{ name: 'COLLECTION_Environment' }}>
+      <group name='COLLECTION_Environment'>
         <mesh
           name='ground'
           castShadow
@@ -29,7 +29,6 @@ useFrame(({ clock }) => {
           geometry={nodes.ground.geometry}
           material={materials.WHITE}
           scale={864.145}
-          userData={{ name: 'ground' }}
         />
         <mesh
           name='hangar'
@@ -38,7 +37,6 @@ useFrame(({ clock }) => {
           geometry={nodes.hangar.geometry}
           material={materials.ImphenziaPixPal}
           scale={[-147.09, -73.197, -254.072]}
-          userData={{ name: 'hangar' }}
         />
         <mesh
           name='hangar_floor'
@@ -48,9 +46,8 @@ useFrame(({ clock }) => {
           material={materials.WHITE}
           position={[0, 0.001, 0]}
           scale={[-147.09, -73.197, -254.072]}
-          userData={{ name: 'hangar_floor' }}
         />
-        <group name='toolbox' position={[32.602, 0, -41.687]} userData={{ name: 'toolbox' }}>
+        <group name='toolbox' position={[32.602, 0, -41.687]}>
           <mesh
             name='Cube009'
             castShadow
@@ -73,7 +70,7 @@ useFrame(({ clock }) => {
             material={nodes.Cube009_2.material}
           />
         </group>
-        <group name='office' userData={{ name: 'office' }}>
+        <group name='office'>
           <mesh
             name='office_1'
             castShadow
@@ -97,7 +94,6 @@ useFrame(({ clock }) => {
           material={materials.WHITE}
           position={[-134.891, 0, -351.945]}
           scale={[49.27, 3.088, 84.826]}
-          userData={{ name: 'buildings' }}
         />
         <mesh
           name='PressW_text'
@@ -108,14 +104,8 @@ useFrame(({ clock }) => {
           position={[9.013, 27.338, -188.116]}
           rotation={[Math.PI / 2, 0, Math.PI / 2]}
           scale={12.763}
-          userData={{ name: 'PressW_text' }}
         />
-        <group
-          name='safetyCones'
-          position={[16.567, 0, -54.747]}
-          scale={[0.609, 1.407, 0.609]}
-          userData={{ name: 'safetyCones' }}
-        >
+        <group name='safetyCones' position={[16.567, 0, -54.747]} scale={[0.609, 1.407, 0.609]}>
           <mesh
             name='Cone006'
             castShadow
@@ -146,19 +136,17 @@ useFrame(({ clock }) => {
           material={materials.WHITE}
           position={[-43.782, 0.665, -69.868]}
           rotation={[0, 0.692, 0]}
-          userData={{ name: 'crates' }}
         />
         <mesh
+          ref={runwayLightsRef}
           name='runway_strip_lights'
           castShadow
           receiveShadow
           geometry={nodes.runway_strip_lights.geometry}
+          material={materials.strips}
           position={[1.012, 0.091, -32.772]}
           rotation={[0, 0, -Math.PI / 2]}
-          userData={{ name: 'runway_strip_lights' }}
-        >
-          <meshPhysicalMaterial ref={runwayLightsRef} emissive={0xffffff}  />
-        </mesh>
+        />
       </group>
     </group>
   )

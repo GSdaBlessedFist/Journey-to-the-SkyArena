@@ -61,6 +61,7 @@ export default function Page() {
           {sceneName === 'title' && <TitleSceneComposite />}
           {sceneName === 'hangar' && <HangarSceneComposite />}
         </Suspense>
+        
       </Canvas>
 
       {/* Overlay UI */}

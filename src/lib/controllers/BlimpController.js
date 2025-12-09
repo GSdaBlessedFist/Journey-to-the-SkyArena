@@ -1,51 +1,107 @@
-import * as THREE from 'three'
+import { useFrame } from "@react-three/fiber"
+import * as THREE from "three"
+import React, { useEffect, useRef } from "react"
 
-export default class BlimpController {
-    constructor(curve) {
-        this.curve = curve
+export default function BlimpController({ scene, blimpRef, groupRef, actions, mixer }) {
+    const keys = React.useRef({ w: false, s: false })
+    const playbackSpeed = React.useRef(0)
+    const currentTime = React.useRef(0)
 
-        this.progress = 0
-        this.velocity = 0
-
-        this.maxSpeed = 0.02
-        this.acceleration = 0.00005
-        this.deceleration = 0.97
-
-        this.keys = { forward: false }
-
-        this.position = new THREE.Vector3()
-        this.quaternion = new THREE.Quaternion()
-    }
-
-    handleKeyDown(code) {
-        if (code === 'KeyW') this.keys.forward = true
-    }
-
-    handleKeyUp(code) {
-        if (code === 'KeyW') this.keys.forward = false
-    }
-
-    update(delta) {
-        // 1. velocity
-        if (this.keys.forward) {
-            this.velocity += delta * this.acceleration
-            this.velocity = Math.min(this.velocity, this.maxSpeed)
-        } else {
-            this.velocity *= this.deceleration
+    // keyboard listeners
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'w' || e.key === 'W') keys.current.w = true
+            if (e.key === 's' || e.key === 'S') keys.current.s = true
+        }
+        const handleKeyUp = (e) => {
+            if (e.key === 'w' || e.key === 'W') keys.current.w = false
+            if (e.key === 's' || e.key === 'S') keys.current.s = false
         }
 
-        // 2. progress
-        this.progress = Math.min(this.progress + this.velocity, 1)
+        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keyup', handleKeyUp)
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [])
 
-        // 3. sample the curve
-        const point = this.curve.getPointAt(this.progress)
-        const tangent = this.curve.getTangentAt(this.progress)
+    useEffect(() => {
+        const clip = actions["BAKED_BlimpEmptyAction"]?.getClip()
+        if (clip) {
+            console.log("CLIP DURATION:", clip.duration)
+        }
+    }, [actions])
+    useFrame((state, delta) => {
+        if (!actions || !groupRef.current) return
 
-        this.position.copy(point)
+        const animAction = actions['BAKED_BlimpEmptyAction']
+        if (!animAction) return
 
-        const target = point.clone().add(tangent)
-        const lookAtMatrix = new THREE.Matrix4()
-        lookAtMatrix.lookAt(point, target, new THREE.Vector3(0, 1, 0))
-        this.quaternion.setFromRotationMatrix(lookAtMatrix)
-    }
+        switch (scene) {
+            case 'HangarScene': {
+                // ---------------------------------------------------
+                // 1. Acceleration & damping
+                // ---------------------------------------------------
+                const accel = 3.0
+                const damping = 2.5
+
+                if (keys.current.w) playbackSpeed.current += accel * delta
+                if (keys.current.s) playbackSpeed.current -= accel * delta
+                if (!keys.current.w && !keys.current.s)
+                    playbackSpeed.current *= Math.exp(-damping * delta)
+
+                playbackSpeed.current = Math.min(
+                    Math.max(playbackSpeed.current, -4),
+                    4
+                )
+
+                // ---------------------------------------------------
+                // 2. Advance baked animation time
+                // ---------------------------------------------------
+                const duration = animAction.getClip().duration
+
+                const speedScale = 10  // try 5, we can tune
+                currentTime.current += delta * playbackSpeed.current * speedScale
+                // currentTime.current =
+                //     ((currentTime.current % duration) + duration) % duration
+
+                // prevent moving behind the start of the baked animation
+                if (currentTime.current < 0) {
+                    currentTime.current = 0
+                    playbackSpeed.current = Math.max(playbackSpeed.current, 0)   // remove negative motion
+                }
+                else if (currentTime.current > duration) {
+                    currentTime.current = duration
+                    playbackSpeed.current = Math.min(playbackSpeed.current, 0)
+                }
+
+                animAction.time = currentTime.current
+                animAction.paused = true
+                mixer.setTime(currentTime.current)
+
+                // ---------------------------------------------------
+                // 3. Apply local forward offset
+                // ---------------------------------------------------
+                const forward = new THREE.Vector3(0, 0, -1)  // adjust axis if needed
+                forward.applyQuaternion(groupRef.current.quaternion)
+                forward.multiplyScalar(playbackSpeed.current * delta)
+
+                groupRef.current.position.add(forward)
+
+                break
+            }
+
+            case 'ChapterOneScene': {
+                // RESERVED FOR LATER
+                break
+            }
+        }
+    })
+    
+
+
+
+    return null
 }
+

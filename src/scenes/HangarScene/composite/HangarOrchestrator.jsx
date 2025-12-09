@@ -31,7 +31,28 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
       console.warn('[HangarOrchestrator :31] No door action found')
     }
   }
-  api.current.moveBlimp = () => {}
+  api.current.moveBlimp = () => {//  <-------------HERE
+    // Ensure we have a reference to the blimp controller
+    if (!blimpControllerRef?.current) return
+
+    const controller = blimpControllerRef.current
+
+    // Animate the blimp automatically along the curve
+    const moveStep = (delta) => {
+      controller.keys.forward = true // simulate holding forward
+      controller.update(delta)
+
+      // Stop when we reach the end
+      if (controller.progress < 1) {
+        requestAnimationFrame(() => moveStep(0.016)) // ~60fps
+      } else {
+        controller.keys.forward = false
+      }
+    }
+
+    moveStep(0.016)
+  }
+
   api.current.playCutscene = () => {}
 
   //Expose API upward
