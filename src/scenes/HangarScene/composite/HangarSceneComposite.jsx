@@ -60,11 +60,9 @@ export default function HangarSceneComposite(props) {
 
   return (
     <group ref={groupRef} {...props} dispose={null}>
-  
       <group name='BLIMPEMPTY_placeholder' position={[0.012, 0, -32.77]}>
         <Blimp ref={blimpRef} scale={1} />
       </group>
-      
 
       {/* Core scene components */}
       <Cameras nodes={nodes} materials={materials} actions={actions} />
@@ -83,7 +81,7 @@ export default function HangarSceneComposite(props) {
       />
       {/* <MotionGraphics nodes={nodes} materials={materials} actions={actions} /> */}
 
-      <HangarOrchestrator ref={orchestratorRef} nodes={nodes} materials={materials} actions={actions} />
+      <HangarOrchestrator ref={orchestratorRef} scene={scene} nodes={nodes} materials={materials} actions={actions} />
     </group>
   )
 }

@@ -4,7 +4,6 @@
   display: grid;
   width: 100%;
   height: 100%;
-  @include b(5px, red);
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(3, 1fr);
 }
@@ -30,7 +29,7 @@
   grid-row-end: 2;
   grid-column-start: 2;
   grid-column-start: 2;
-  @include b();
+  
 }
 .hangar_blimpMove_content{
   @extend %instruction_content;

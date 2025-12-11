@@ -4,14 +4,20 @@ import * as THREE from 'three'
 import p from '@/lib/helpers/consoleHelper'
 import { useFrame } from '@react-three/fiber'
 
-const SOURCE = 'Blimp.jsx'
+const SOURCE = 'Blimp.jsx off'
 const srcColor = [165, 45]
 
 export default function Blimp({scale = 1 }) {
-  const { scene, nodes, materials, animations } = useGLTF('/models/Blimp.glb')
   const blimpRef = useRef()
+  const { scene, nodes, materials, animations } = useGLTF('/models/Blimp.glb')
+  const { actions } = useAnimations(animations, blimpRef)
 
-  
+  useEffect(()=>{
+    p(SOURCE,16,srcColor,actions)
+    const propellersSpin = actions?.['propellersAction'];
+    propellersSpin.reset();
+    propellersSpin.play();
+  },[])
 
   return (
     <group dispose={null}>

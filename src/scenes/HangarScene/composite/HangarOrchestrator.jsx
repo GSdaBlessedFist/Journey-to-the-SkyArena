@@ -2,8 +2,9 @@
 
 import { useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
 import * as THREE from "three";
-import p from '@/lib/helpers/consoleHelper'
 import { useInstructions } from '@/providers/InstructionsProvider';
+import p from '@/lib/helpers/consoleHelper'
+import { useFrame } from '@react-three/fiber';
 
 const SOURCE = 'HangarOrcestrator.jsx'
 const srcColor = [240, 76]
@@ -13,12 +14,16 @@ const srcColor = [240, 76]
  * that can be called from other components (like HangarMenu).
  */
 
-const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materials,actions},ref){
+const HangarOrchestrator = forwardRef(function HangarOrchestrator({scene,nodes,materials,actions},ref){
   const {setInstructionsFor} = useInstructions();
   const api = useRef({})
+  const runwayLightsRef = useRef(scene.getObjectByName('runway_strip_lights'))
   const domain = 'hangar';
+  const flashing = useRef(false)
+
   // useEffect(()=>{
-  //   p(SOURCE, 19, srcColor, actions)
+    
+
   // },[actions])
 
    useEffect(() => {
@@ -42,7 +47,17 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
 
        setTimeout(() => {
          api.current.showLaunchPrompt?.()
+         api.current.runwayLightsFlash?.()
        }, 2000)
+     }
+     //---------------------------------------------
+     // Runway lights
+     //---------------------------------------------
+     api.current.runwayLightsFlash = () =>{
+      flashing.current = true
+      p(SOURCE, 53, srcColor, scene.getObjectByName('runway_strip_lights'))
+      
+
      }
      //---------------------------------------------
      // Blimp move
@@ -74,7 +89,9 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
      }
      const handleLaunchKey = (e) => {
        if (e.key === 'w' || e.key === 'W') {
-         api.current.moveBlimp?.()
+         setTimeout(() => {
+           api.current.moveBlimp?.()
+         }, 1750)
          setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
          window.removeEventListener('keydown', handleLaunchKey)
        }
@@ -86,6 +103,14 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
 
   //Expose API upward
   useImperativeHandle(ref, () => api.current)
+
+  useFrame(({ clock }) => {
+    if (!flashing.current) return // ⬅ do nothing until activated
+
+    const t = clock.getElapsedTime()
+    runwayLightsRef.current.emissiveIntensity = Math.abs(Math.sin(t / 2)) * 15 + 5.0
+    
+  })
 
   return null
 })

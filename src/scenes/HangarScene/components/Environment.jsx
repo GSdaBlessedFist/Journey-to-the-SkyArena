@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { MeshStandardMaterial } from 'three'
 import { useFrame } from '@react-three/fiber'
+import p from '@/lib/helpers/consoleHelper'
+
+const SOURCE = 'Environment.jsx'
+const srcColor = [140, 36]
 
 export default function Environment({ nodes, materials, actions, ...props }) {
   if (!nodes || !materials) {
@@ -10,14 +14,7 @@ export default function Environment({ nodes, materials, actions, ...props }) {
   }
   const runwayLightsRef = useRef();
 
-  useEffect(()=>{
-    if(runwayLightsRef.current)console.log(runwayLightsRef.current)
-  },[])
-useFrame(({ clock }) => {
-  const t = clock.getElapsedTime()
-  runwayLightsRef.current.emissiveIntensity = Math.abs(Math.sin(t /2)) * 15 + 5.0;
   
-})
 
   return (
     <group {...props}>

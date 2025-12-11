@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei'
 import p from '@/lib/helpers/consoleHelper'
 import { useThree } from '@react-three/fiber'
 
-const SOURCE = 'HangarDoors'
+const SOURCE = 'HangarDoors off'
 const srcColor = [240, 56]
 
 export default function HangarDoors({ nodes, materials, actions, ...props }) {

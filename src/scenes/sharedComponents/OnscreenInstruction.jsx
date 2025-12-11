@@ -4,7 +4,7 @@ import styles from './onscreenInstructions.module.scss'
 import p from '@/lib/helpers/consoleHelper'
 
 
-const SOURCE = 'OnscreenInstruction.jsx '
+const SOURCE = 'OnscreenInstruction.jsx off'
 const srcColor = [205, 35]
 
 function OnscreenInstruction({ sceneName }) {
