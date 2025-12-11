@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   @include b(5px, red);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(3, 1fr);
 }
 %grid_cell{
@@ -13,17 +13,41 @@
     justify-content: center;
     align-items: center;
 }
+%instruction_content{
+  font-size: 2.0rem;
+  color: white;
+  animation: 1.15s fadeIn forwards;
+}
+
 .overlayGrid {
   @extend %overlay_grid;
 }
 
-.hangar_blimpMove {
+.hangar_blimpMove_gridPosition {
   @extend %grid_cell;
   background: transparent;
-  font-size: 1.2rem;
-  color: white;
   grid-row-start: 2;
   grid-row-end: 2;
-  grid-column-start: 3;
-  grid-column-start: 3;
+  grid-column-start: 2;
+  grid-column-start: 2;
+  @include b();
+}
+.hangar_blimpMove_content{
+  @extend %instruction_content;
+  background: linear-gradient(to right,transparent,rgba(0,0,0,0.5),transparent);
+}
+
+.hangar_blimpMove_content_fadeOut{
+  @extend .hangar_blimpMove_content;
+  animation: 1.15s fadeOut forwards;
+}
+
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
 }

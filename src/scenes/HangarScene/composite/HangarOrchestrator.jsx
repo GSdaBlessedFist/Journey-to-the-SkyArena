@@ -42,7 +42,7 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
 
        setTimeout(() => {
          api.current.showLaunchPrompt?.()
-       }, 1500)
+       }, 2000)
      }
      //---------------------------------------------
      // Blimp move
@@ -66,10 +66,21 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator({nodes,materia
      // Show Launch prompt
      //---------------------------------------------
      api.current.showLaunchPrompt = () => {
-       p(SOURCE, 66, srcColor, 'SHOW PROMPT: Press button to launch blimp')
-       setInstructionsFor([domain,"blimpMove"])
-     }
+       p(SOURCE, 66, srcColor, 'SHOW PROMPT')
+       //setInstructionsFor([domain,"blimpMove"])
+       setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: false })
 
+       window.addEventListener('keydown', handleLaunchKey)
+     }
+     const handleLaunchKey = (e) => {
+       if (e.key === 'w' || e.key === 'W') {
+         api.current.moveBlimp?.()
+         setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
+         window.removeEventListener('keydown', handleLaunchKey)
+       }
+     }
+     //---------------------------------------------
+     //---------------------------------------------
      api.current.playCutscene = () => {}
    }, [setInstructionsFor])
 

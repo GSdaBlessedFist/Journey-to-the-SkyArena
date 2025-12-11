@@ -1,8 +1,8 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react';
-import p from '../lib/helpers/consoleHelper'
 import getNestedValue from '@/lib/helpers/getNestedValue';
 import instructionsMap from '@/scenes/sharedComponents/instructionsMap';
+import p from '../lib/helpers/consoleHelper'
 
 const SOURCE = 'InstructionsProvider.jsx '
 const srcColor = [75, 45]
@@ -10,12 +10,18 @@ const srcColor = [75, 45]
 const InstructionsContext = createContext(null)
 
 export function InstructionsProvider({ children }) {
-  const [instructionsFor, setInstructionsFor] = useState([])
-  const [activeInstructionObj,setActiveInstructionObj] = useState();
+  const [instructionsFor, setInstructionsFor] = useState({})
+  const [activeInstructionObj,setActiveInstructionObj] = useState({});
 
   useEffect(() => {
-    
-   setActiveInstructionObj(instructionsMap?.[instructionsFor[0]]?.[instructionsFor[1]])
+    if (!instructionsFor.domain || !instructionsFor.stage) return
+
+    const found = instructionsMap[instructionsFor.domain]?.[instructionsFor.stage]
+
+    setActiveInstructionObj({
+      ...found,
+      fadeOut: instructionsFor.fadeOut,
+    })
   }, [instructionsFor])
 
   const values = {

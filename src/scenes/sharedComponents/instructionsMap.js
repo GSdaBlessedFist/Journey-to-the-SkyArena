@@ -1,8 +1,9 @@
 const instructionsMap = {
     hangar: {
         blimpMove: {
-            instruction: 'Press LAUNCH to move the blimp out of the hangar',
-            styles: 'hangar_blimpMove'
+            instruction: 'Press "W" to move to the runway.',
+            position_style: 'hangar_blimpMove_gridPosition',
+            content_style: 'hangar_blimpMove_content',
         },
     },
 }
