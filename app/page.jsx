@@ -8,6 +8,7 @@ import { Suspense } from 'react'
 import { usePortfolio } from '../src/providers/PortfolioProvider'
 import { LIGHTS, getTimeOfDay } from '../src/lib/helpers/getTimeOfDay'
 import Skybox from '@/scenes/sharedComponents/Skybox'
+import BloomComposer from '@/scenes/sharedComponents/postProcessingEffects/BloomComposer'
 import { a, useSpring } from '@react-spring/three'
 import { Leva } from 'leva'
 import Overlay from '@/scenes/sharedComponents/Overlay'
@@ -61,7 +62,7 @@ export default function Page() {
           {sceneName === 'title' && <TitleSceneComposite />}
           {sceneName === 'hangar' && <HangarSceneComposite />}
         </Suspense>
-        
+        <BloomComposer/>
       </Canvas>
       <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
 

@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react';
 import getNestedValue from '@/lib/helpers/getNestedValue';
-import instructionsMap from '@/scenes/sharedComponents/instructionsMap';
+import instructionsMap from '@/scenes/sharedComponents/instructions/instructionsMap';
 import p from '../lib/helpers/consoleHelper'
 
 const SOURCE = 'InstructionsProvider.jsx '
