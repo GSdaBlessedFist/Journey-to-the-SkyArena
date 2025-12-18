@@ -12,7 +12,7 @@ import HangarLights from '../components/HangarLights.jsx'
 import HangarMenu from '../components/HangarMenu.jsx'
 import MotionGraphics from '../components/MotionGraphics.jsx'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useControls } from 'leva'
+import { useLevaControls} from "../../../providers/LevaProvider";
 import p from '@/lib/helpers/consoleHelper'
 import BlimpController from '@/lib/controllers/BlimpController'
 
@@ -32,7 +32,7 @@ export default function HangarSceneComposite(props) {
   const { camera } = useThree()
 
   
-  const { spotlightIntensity, offsetX, offsetY, offsetZ } = useControls({
+  const { spotlightIntensity, offsetX, offsetY, offsetZ } = useLevaControls({
     spotlightIntensity: { value: 2500, min: 0, max: 5000 },
     // offsetX: { value: 0, min: -150, max: 150, step: 0.1 },
     // offsetY: { value: 5, min: -50, max: 50, step: 0.1 },

@@ -15,8 +15,8 @@ export default function BloomComposer() {
 
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(size.width, size.height),
-      .21, // intensity
-      0.414, // radius
+      .15, // intensity
+      0.05, // radius
       0.12, // threshold
     )
     composer.current.addPass(bloomPass)

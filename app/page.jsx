@@ -62,23 +62,13 @@ export default function Page() {
           {sceneName === 'title' && <TitleSceneComposite />}
           {sceneName === 'hangar' && <HangarSceneComposite />}
         </Suspense>
-        <BloomComposer/>
+        {/* <BloomComposer/> */}
       </Canvas>
       <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
 
       {/* Overlay UI */}
 
-      <Leva
-        collapsed={false}
-        hidden={false}
-        fill={false}
-        style={{
-          position: 'relative',
-          top: 0,
-          right: 0,
-          zIndex: 9999, // ensures it renders above Overlay and Canvas
-        }}
-      />
+      
     </div>
   )
 }
