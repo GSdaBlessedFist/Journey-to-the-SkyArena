@@ -1,118 +1,118 @@
-// /src/scenes/HangarScene/composite/HangarOrchestrator.jsx
+// 2025-12-18 09:32
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 
-import { useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
-import * as THREE from "three";
-import { useInstructions } from '@/providers/InstructionsProvider';
+import { useInstructions } from '@/providers/InstructionsProvider'
 import p from '@/lib/helpers/consoleHelper'
-import { useFrame } from '@react-three/fiber';
-
+import CameraFadePortal from '@/scenes/sharedComponents/overlays/CameraFadePortal'
 const SOURCE = 'HangarOrcestrator.jsx'
 const srcColor = [240, 76]
-/**
- * HangarOrchestrator:
- * This component exposes a set of scene-control functions
- * that can be called from other components (like HangarMenu).
- */
 
-const HangarOrchestrator = forwardRef(function HangarOrchestrator({scene,nodes,materials,actions},ref){
-  const {setInstructionsFor} = useInstructions();
+const HangarOrchestrator = forwardRef(function HangarOrchestrator(
+  { scene, nodes, materials, actions, cameraDirectorRef, setFadeVisible, fadeMidpointRef },
+  ref,
+) {
+  const { setInstructionsFor } = useInstructions()
+
   const api = useRef({})
   const runwayLightsRef = useRef(scene.getObjectByName('runway_strip_lights'))
-  const domain = 'hangar';
   const flashing = useRef(false)
 
-  // useEffect(()=>{
-    
+  // -------------------------------
+  // Fade orchestration state
+  // -------------------------------
+ 
 
-  // },[actions])
+  const domain = 'hangar'
 
-   useEffect(() => {
-     //---------------------------------------------
-     // Hangar doors open
-     //---------------------------------------------
-     api.current.openHangarDoors = () => {
-       p(SOURCE, 19, srcColor, 'Liftoff sequence started')
+  // -------------------------------
+  // Orchestrator API
+  // -------------------------------
+  useEffect(() => {
+    //---------------------------------------------
+    // Hangar doors open
+    //---------------------------------------------
+    api.current.openHangarDoors = () => {
+      const doorAction = actions?.['hangarDoors_OpeningAction']
 
-       //Hangar door animation
-       const doorAction = actions?.['hangarDoors_OpeningAction']
-       if (doorAction) {
-         doorAction.reset()
-         doorAction.setLoop(THREE.LoopOnce)
-         doorAction.clampWhenFinished = true
-         doorAction.play()
-         p(SOURCE, 29, srcColor, 'Doors opening')
-       } else {
-         console.warn('[HangarOrchestrator :31] No door action found')
-       }
+      if (doorAction) {
+        doorAction.reset()
+        doorAction.setLoop(THREE.LoopOnce)
+        doorAction.clampWhenFinished = true
+        doorAction.play()
+      }
 
-       setTimeout(() => {
-         api.current.showLaunchPrompt?.()
-         api.current.runwayLightsFlash?.()
-       }, 2000)
-     }
-     //---------------------------------------------
-     // Runway lights
-     //---------------------------------------------
-     api.current.runwayLightsFlash = () =>{
+      setTimeout(() => {
+        api.current.showLaunchPrompt?.()
+        api.current.runwayLightsFlash?.()
+      }, 2000)
+    }
+
+    //---------------------------------------------
+    // Runway lights
+    //---------------------------------------------
+    api.current.runwayLightsFlash = () => {
       flashing.current = true
-      p(SOURCE, 53, srcColor, scene.getObjectByName('runway_strip_lights'))
-      
+    }
 
-     }
-     //---------------------------------------------
-     // Blimp move
-     //---------------------------------------------
-     api.current.moveBlimp = () => {
-       p(SOURCE, 35, srcColor, 'Blimp moving out')
+    //---------------------------------------------
+    // Blimp movement
+    //---------------------------------------------
+    api.current.moveBlimp = () => {
+      const blimpMove = actions?.['BAKED_BlimpEmptyAction']
 
-       //Blimp path follow animation
-       const blimpMove = actions?.['BAKED_BlimpEmptyAction']
-       if (blimpMove) {
-         blimpMove.reset()
-         blimpMove.setLoop(THREE.LoopOnce)
-         blimpMove.clampWhenFinished = true
-         blimpMove.play()
-         p(SOURCE, 47, srcColor, 'Blimp heading out')
-       } else {
-         console.warn('[HangarOrchestrator :31] No blimp action found')
-       }
-     }
-     //---------------------------------------------
-     // Show Launch prompt
-     //---------------------------------------------
-     api.current.showLaunchPrompt = () => {
-       p(SOURCE, 66, srcColor, 'SHOW PROMPT')
-       //setInstructionsFor([domain,"blimpMove"])
-       setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: false })
+      if (blimpMove) {
+        blimpMove.reset()
+        blimpMove.setLoop(THREE.LoopOnce)
+        blimpMove.clampWhenFinished = true
+        blimpMove.play()
+      }
+    }
 
-       window.addEventListener('keydown', handleLaunchKey)
-     }
-     const handleLaunchKey = (e) => {
-       if (e.key === 'w' || e.key === 'W') {
-         setTimeout(() => {
-           api.current.moveBlimp?.()
-         }, 1750)
-         setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
-         window.removeEventListener('keydown', handleLaunchKey)
-       }
-     }
-     //---------------------------------------------
-     //---------------------------------------------
-     api.current.playCutscene = () => {}
-   }, [setInstructionsFor])
+    //---------------------------------------------
+    // Launch prompt + input
+    //---------------------------------------------
+    api.current.showLaunchPrompt = () => {
+      setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: false })
+      window.addEventListener('keydown', handleLaunchKey)
+    }
 
-  //Expose API upward
-  useImperativeHandle(ref, () => api.current)
+    const handleLaunchKey = (e) => {
+      if (e.key !== 'w' && e.key !== 'W') return
 
+      // Start blimp motion
+      api.current.moveBlimp?.()
+
+      // Schedule cinematic beat → fade
+      setTimeout(() => {
+        fadeMidpointRef.current = () => {
+          cameraDirectorRef.current?.cutTo('outside1_camera_1')
+        }
+        setFadeVisible(true)
+      }, 1750)
+
+      setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
+      window.removeEventListener('keydown', handleLaunchKey)
+    }
+  }, [actions, cameraDirectorRef, setInstructionsFor])
+
+  // -------------------------------
+  // Runway light animation
+  // -------------------------------
   useFrame(({ clock }) => {
-    if (!flashing.current) return // ⬅ do nothing until activated
-
+    if (!flashing.current || !runwayLightsRef.current) return
     const t = clock.getElapsedTime()
-    runwayLightsRef.current.emissiveIntensity = Math.abs(Math.sin(t / 2)) * 15 + 5.0
-    
+    runwayLightsRef.current.emissiveIntensity = Math.abs(Math.sin(t / 2)) * 15 + 5
   })
 
+  // -------------------------------
+  // Expose orchestrator API
+  // -------------------------------
+  useImperativeHandle(ref, () => api.current)
+
+ 
   return null
 })
 
-export default HangarOrchestrator;
+export default HangarOrchestrator

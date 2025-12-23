@@ -1,18 +1,56 @@
-import React from 'react'
-import { PerspectiveCamera, useGLTF } from '@react-three/drei'
+//2025-12-18 09:44
 
-export default function Cameras({ nodes, materials, actions, ...props }) {
-  if (!nodes || !materials) {
-    console.warn('[Cameras] nodes or materials not provided')
-    return null
-  }
+import { PerspectiveCamera, useGLTF } from '@react-three/drei'
+import { useEffect, useRef } from 'react'
+import p from '@/lib/helpers/consoleHelper'
+
+const SOURCE = 'Cameras.jsx'
+const srcColor = [140, 76]
+
+export default function Cameras({ cameraDirectorRef, ...props }) {
+  const mainCamRef = useRef()
+  const outside1CamRef = useRef()
+  const outside2CamRef = useRef()
+  const landingGearCamRef = useRef()
+  const roamingCamRef = useRef()
+
+  useEffect(() => {
+    if (!cameraDirectorRef.current) return
+    if (
+      !mainCamRef.current ||
+      !outside1CamRef.current ||
+      !outside2CamRef.current ||
+      !landingGearCamRef.current ||
+      !roamingCamRef.current
+    )
+      return
+    if (cameraDirectorRef.current) {
+      if (mainCamRef.current) cameraDirectorRef.current.registerCamera('Main_camera', mainCamRef.current)
+      if (outside1CamRef.current) cameraDirectorRef.current.registerCamera('outside1_camera_1', outside1CamRef.current)
+      if (outside2CamRef.current) cameraDirectorRef.current.registerCamera('outside2_camera_1', outside2CamRef.current)
+      if (landingGearCamRef.current) cameraDirectorRef.current.registerCamera('landingGear_camera_1', landingGearCamRef.current)
+      if (roamingCamRef.current) cameraDirectorRef.current.registerCamera('ROAMING_CAM', roamingCamRef.current)
+    }
+  }, [cameraDirectorRef])
 
   return (
     <group {...props}>
       <group name='COLLECTION_Cameras' userData={{ name: 'COLLECTION_Cameras' }}>
         <PerspectiveCamera
+          name='landingGear_camera_1'
+          makeDefault={false}
+          ref={landingGearCamRef}
+          far={1000}
+          near={0.1}
+          fov={22.895}
+          position={[6.375, 1.099, -42.73]}
+          rotation={[Math.PI, 0.669, 3.077]}
+          userData={{ name: 'landingGear_camera' }}
+        />
+        <PerspectiveCamera
           name='Main_camera'
           makeDefault={true}
+          ref={mainCamRef}
           far={3048}
           near={0.1}
           fov={44.096}
@@ -21,8 +59,20 @@ export default function Cameras({ nodes, materials, actions, ...props }) {
           userData={{ name: 'Main_camera' }}
         />
         <PerspectiveCamera
+          name='outside2_camera_1'
+          makeDefault={false}
+          ref={outside2CamRef}
+          far={1000}
+          near={0.1}
+          fov={19.157}
+          position={[-150.645, 2.286, -226.909]}
+          rotation={[2.837, -1.156, 2.862]}
+          userData={{ name: 'outside2_camera' }}
+        />
+        <PerspectiveCamera
           name='outside1_camera_1'
           makeDefault={false}
+          ref={outside1CamRef}
           far={1000}
           near={0.1}
           fov={22.895}
@@ -33,6 +83,7 @@ export default function Cameras({ nodes, materials, actions, ...props }) {
         <PerspectiveCamera
           name='ROAMING_CAM'
           makeDefault={false}
+          ref={roamingCamRef}
           far={1000}
           near={0.1}
           fov={15.177}

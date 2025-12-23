@@ -9,7 +9,7 @@ import { useControls } from 'leva'
 import Blimp from './Blimp'
 import p from '../lib/helpers/consoleHelper'
 import gsap from 'gsap'
-import CameraFadePortal from './CameraFadePortal'
+import CameraFadePortal from '../scenes/sharedComponents/overlays/CameraFadePortal'
 import PiP_LiveCam from './PiP_viewers/PiP_LiveCam'
 
 //p(sourceName: any, line: any, hue: number, data: any, variableName?: string)

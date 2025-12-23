@@ -11,7 +11,7 @@ import Skybox from '@/scenes/sharedComponents/Skybox'
 import BloomComposer from '@/scenes/sharedComponents/postProcessingEffects/BloomComposer'
 import { a, useSpring } from '@react-spring/three'
 import { Leva } from 'leva'
-import Overlay from '@/scenes/sharedComponents/Overlay'
+import Overlay from '@/scenes/sharedComponents/overlays/Overlay'
 
 const TitleSceneComposite = dynamic(() => import('../src/scenes/TitleScene/composite/TitleSceneComposite'), {
   ssr: false,

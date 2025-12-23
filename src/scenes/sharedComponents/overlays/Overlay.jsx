@@ -1,6 +1,8 @@
 // Overlay.jsx
-import TitlePlacard from '../TitleScene/components/TitlePlacard'
-import OnscreenInstruction from './instructions/OnscreenInstruction'
+
+import TitlePlacard from "@/scenes/TitleScene/components/TitlePlacard"
+import OnscreenInstruction from "../instructions/OnscreenInstruction"
+
 
 
 export default function Overlay({ sceneName, timeSetting }) {

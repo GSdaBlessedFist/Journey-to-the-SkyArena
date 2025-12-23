@@ -7,7 +7,7 @@ import { useMachine } from '@xstate/react'
 import portfolioMachine from '../machines/portfolioMachine'
 import { useControls } from 'leva'
 import Blimp from './Blimp'
-import { CameraFade } from './CameraFade'
+import { CameraFade } from '../scenes/sharedComponents/overlays/CameraFade'
 import p from '../lib/helpers/consoleHelper'
 import gsap from 'gsap'
 //p(sourceName: any, line: any, hue: number, data: any, variableName?: string)
