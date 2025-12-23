@@ -1,6 +1,4 @@
-[submodule "src/lib/imported_utilities/utilities"]
-	path = src/lib/imported_utilities/utilities
+[submodule "src/lib/imported_utilities"]
+	path = src/lib/imported_utilities
 	url = https://github.com/GSdaBlessedFist/utilities.git
-[submodule "src/lib/utilities"]
-	path = src/lib/utilities
-	url = https://github.com/GSdaBlessedFist/utilities.git
+
