@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useGLTF, PerspectiveCamera, useAnimations } from '@react-three/drei'
 import * as THREE from 'three'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 import { useFrame } from '@react-three/fiber'
 
 const SOURCE = 'Blimp.jsx off'

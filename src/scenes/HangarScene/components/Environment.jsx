@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { MeshStandardMaterial } from 'three'
 import { useFrame } from '@react-three/fiber'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 
 const SOURCE = 'Environment.jsx'
 const srcColor = [140, 36]

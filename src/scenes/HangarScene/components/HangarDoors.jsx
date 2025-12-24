@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 import { useThree } from '@react-three/fiber'
 
 const SOURCE = 'HangarDoors off'

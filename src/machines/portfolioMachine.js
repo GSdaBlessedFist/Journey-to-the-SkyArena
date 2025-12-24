@@ -1,5 +1,5 @@
 import { createMachine, assign } from 'xstate';
-import p from '../lib/helpers/consoleHelper';
+import p from '../lib/imported_utilities/helpers/consoleHelper';
 import { getTimeOfDay } from '../lib/helpers/getTimeOfDay';
 
 const SOURCE = 'portfolioMachine';

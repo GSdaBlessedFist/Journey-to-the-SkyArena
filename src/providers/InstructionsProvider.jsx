@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import getNestedValue from '@/lib/helpers/getNestedValue';
 import instructionsMap from '@/scenes/sharedComponents/instructions/instructionsMap';
-import p from '../lib/helpers/consoleHelper'
+import p from '../lib/imported_utilities/helpers/consoleHelper'
 
 const SOURCE = 'InstructionsProvider.jsx '
 const srcColor = [75, 45]

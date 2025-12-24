@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { usePortfolio } from '@/providers/PortfolioProvider'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 
 const SOURCE = 'HangarMENU'
 const srcColor = [140]

@@ -16,13 +16,14 @@ import HangarMenu from '../components/HangarMenu.jsx'
 import CameraDirector from './CameraDirector'
 import CameraFadePortal from '@/scenes/sharedComponents/overlays/CameraFadePortal'
 import { useLevaControls } from '../../../providers/LevaProvider'
-import { useDeltaLogger } from '@/lib/helpers/useDeltaLogger'
-import p from '@/lib/helpers/consoleHelper'
+
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
+import { useDeltaLogger } from '@/lib/imported_utilities/hooks/useDeltaLogger'
 
 const SOURCE = 'HangarSceneComposite'
 const srcColor = [40, 56]
 
-export default function HangarSceneComposite(props) {
+export default function HangarSceneComposite({ fadeVisible, setFadeVisible, fadeMidpointRef, ...props }) {
   const groupRef = useRef()
   const blimpRef = useRef()
   const { scene, nodes, materials, animations } = useGLTF('/models/Scene_hangar.glb')
@@ -31,13 +32,15 @@ export default function HangarSceneComposite(props) {
   const cameraDirectorRef = useRef()
   const orchestratorRef = useRef()
 
-  const [fadeVisible, setFadeVisible] = useState(false)
-  const fadeMidpointRef = useRef(null)
-
   // DELTA LOGGING
-  const setWatch = useDeltaLogger({ fadeVisible }, [])
+  //const setWatch = useDeltaLogger({ fadeVisible }, [])
 
   const { camera } = useThree()
+
+  const requestFade = (onMidpoint) => {
+    fadeMidpointRef.current = onMidpoint
+    setFadeVisible(true)
+  }
 
   /////////////////////////////////////////////////
   // Hangar lights
@@ -59,9 +62,9 @@ export default function HangarSceneComposite(props) {
   //-----------------------------------------------------------------------
   //-----------------------------------------------------------------------
 
-  useEffect(()=>{
-    setWatch(['fadeVisible'])
-  },[])
+  // useEffect(() => {
+  //   setWatch(['fadeVisible'])
+  // }, [])
 
   return (
     <group ref={groupRef} {...props} dispose={null}>
@@ -85,17 +88,6 @@ export default function HangarSceneComposite(props) {
       {/* Camera director */}
       <CameraDirector ref={cameraDirectorRef} />
 
-      {/* Fade portal */}
-      <CameraFadePortal
-        visible={fadeVisible}
-        onMidpoint={() => {
-          fadeMidpointRef.current?.()
-          fadeMidpointRef.current = null
-          setFadeVisible(false)
-          
-        }}
-      />
-
       {/* Hangar orchestrator */}
       <HangarOrchestrator
         ref={orchestratorRef}
@@ -104,8 +96,9 @@ export default function HangarSceneComposite(props) {
         nodes={nodes}
         materials={materials}
         actions={actions}
-        setFadeVisible={setFadeVisible}       // passed to orchestrator if needed
-        fadeMidpointRef={fadeMidpointRef}     // passed to orchestrator if needed
+        requestFade={requestFade} // passed to orchestrator if needed
+        fadeMidpointRef={fadeMidpointRef}
+        setFadeVisible={setFadeVisible}
       />
     </group>
   )

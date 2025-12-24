@@ -8,7 +8,7 @@ import Lights from '../components/Lights.jsx'
 
 import { usePortfolio } from '../../../providers/PortfolioProvider'
 import { LIGHTS } from '../../../lib/helpers/getTimeOfDay'
-import p from '../../../lib/helpers/consoleHelper'
+import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 import { Leva } from 'leva'
 
 const SOURCE = 'TitleSceneComposite'

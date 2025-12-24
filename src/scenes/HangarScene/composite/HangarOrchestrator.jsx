@@ -4,13 +4,13 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 import { useInstructions } from '@/providers/InstructionsProvider'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 import CameraFadePortal from '@/scenes/sharedComponents/overlays/CameraFadePortal'
 const SOURCE = 'HangarOrcestrator.jsx'
 const srcColor = [240, 76]
 
 const HangarOrchestrator = forwardRef(function HangarOrchestrator(
-  { scene, nodes, materials, actions, cameraDirectorRef, setFadeVisible, fadeMidpointRef },
+  { scene, nodes, materials, actions, cameraDirectorRef, requestFade, fadeMidpointRef, setFadeVisible },
   ref,
 ) {
   const { setInstructionsFor } = useInstructions()
@@ -22,7 +22,6 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator(
   // -------------------------------
   // Fade orchestration state
   // -------------------------------
- 
 
   const domain = 'hangar'
 
@@ -86,16 +85,17 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator(
 
       // Schedule cinematic beat → fade
       setTimeout(() => {
-        fadeMidpointRef.current = () => {
+        requestFade(() => {
           cameraDirectorRef.current?.cutTo('outside1_camera_1')
-        }
-        setFadeVisible(true)
+          // After switch, fade out
+          setTimeout(() => setFadeVisible(false), 2500)
+        })
       }, 1750)
 
       setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
       window.removeEventListener('keydown', handleLaunchKey)
     }
-  }, [actions, cameraDirectorRef, setInstructionsFor])
+  }, [actions, cameraDirectorRef, setInstructionsFor, requestFade, setFadeVisible])
 
   // -------------------------------
   // Runway light animation
@@ -111,7 +111,6 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator(
   // -------------------------------
   useImperativeHandle(ref, () => api.current)
 
- 
   return null
 })
 

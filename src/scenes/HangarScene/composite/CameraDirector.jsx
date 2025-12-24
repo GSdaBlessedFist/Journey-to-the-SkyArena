@@ -3,7 +3,7 @@
 
 import { forwardRef, useImperativeHandle, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 
 const SOURCE = 'CameraDirector'
 const srcColor = [80, 56]

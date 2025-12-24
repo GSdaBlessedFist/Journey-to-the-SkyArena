@@ -3,7 +3,7 @@ import { Line, useAnimations, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
-import p from '../lib/helpers/consoleHelper'
+import p from '../lib/imported_utilities/helpers/consoleHelper'
 //p(sourceName: any, line: any, hue: number, data: any, variableName?: string)
 const SOURCE = 'Blimp '
 const srcColor = '213'

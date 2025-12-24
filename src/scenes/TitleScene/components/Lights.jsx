@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import { useControls, folder } from 'leva'
 import { LIGHTS } from '@/lib/helpers/getTimeOfDay'
 import { useFrame } from '@react-three/fiber'
-import p from '../../../lib/helpers/consoleHelper'
+import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 
 export default function Lights({ nodes, materials, timeOfDay, ...props }) {
   // -------------------------------

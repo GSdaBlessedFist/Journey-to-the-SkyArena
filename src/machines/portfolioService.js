@@ -10,7 +10,7 @@
 
 import { createActor } from 'xstate';
 import portfolioMachine from './portfolioMachine.js';
-import p from '../lib/helpers/consoleHelper';
+import p from '../lib/imported_utilities/helpers/consoleHelper';
 
 const SOURCE = 'portfolioService off';
 const srcColor = [150, 50];

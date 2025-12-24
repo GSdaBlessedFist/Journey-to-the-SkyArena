@@ -1,5 +1,5 @@
 'use client'
-import p from '../../../lib/helpers/consoleHelper'
+import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 import styles from './styles/titlePlacard.module.scss'
 import { IoMoon, IoSunny } from 'react-icons/io5'
 import { useEffect } from 'react'

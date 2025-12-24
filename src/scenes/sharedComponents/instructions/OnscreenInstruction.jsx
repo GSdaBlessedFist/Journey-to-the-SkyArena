@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useInstructions } from '@/providers/InstructionsProvider'
 import styles from './onscreenInstructions.module.scss'
-import p from '@/lib/helpers/consoleHelper'
+import p from '@/lib/imported_utilities/helpers/consoleHelper'
 
 
 const SOURCE = 'OnscreenInstruction.jsx off'

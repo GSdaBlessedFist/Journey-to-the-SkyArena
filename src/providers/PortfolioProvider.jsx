@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react'
 import portfolioService from '../machines/portfolioService'
-import p from '../lib/helpers/consoleHelper'
+import p from '../lib/imported_utilities/helpers/consoleHelper'
 
 const SOURCE = 'PortfolioProvider.jsx off'
 const srcColor = [255, 45]

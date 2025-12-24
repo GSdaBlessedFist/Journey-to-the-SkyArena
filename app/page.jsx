@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { Html, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import { Suspense, useRef, useState } from 'react'
 import { usePortfolio } from '../src/providers/PortfolioProvider'
 import { LIGHTS, getTimeOfDay } from '../src/lib/helpers/getTimeOfDay'
 import Skybox from '@/scenes/sharedComponents/Skybox'
@@ -30,6 +30,9 @@ export default function Page() {
   const sceneName = state.sceneName
   const timeOfDay = state.timeOfDay || 'night'
   const currentLight = LIGHTS[timeOfDay] || getTimeOfDay().lightSetting
+
+  const [fadeVisible, setFadeVisible] = useState(false)
+  const fadeMidpointRef = useRef(null)
 
   // 🔆 Use one spring object for all lighting-related values, including shader gradients
   const spring = useSpring({
@@ -60,15 +63,19 @@ export default function Page() {
 
           {/* Scenes */}
           {sceneName === 'title' && <TitleSceneComposite />}
-          {sceneName === 'hangar' && <HangarSceneComposite />}
+          {sceneName === 'hangar' && (
+            <HangarSceneComposite
+              fadeVisible={fadeVisible}
+              setFadeVisible={setFadeVisible}
+              fadeMidpointRef={fadeMidpointRef}
+            />
+          )}
         </Suspense>
         {/* <BloomComposer/> */}
       </Canvas>
-      <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} />
+      <Overlay sceneName={sceneName} timeSetting={timeOfDay.toLowerCase()} fadeVisible={fadeVisible} />
 
       {/* Overlay UI */}
-
-      
     </div>
   )
 }
