@@ -19,28 +19,42 @@ export default function HangarDoors({ nodes, materials, actions, ...props }) {
   return (
     <group {...props}>
       <group name='COLLECTION_HangarDoors' userData={{ name: 'COLLECTION_HangarDoors' }}>
-        <mesh
-          name='hangar_door_L'
-          castShadow
-          receiveShadow
-          geometry={nodes.hangar_door_L.geometry}
-          material={materials.WHITE}
-          position={[15.47, 0, -79.29]}
-          rotation={[-Math.PI, 0, 0]}
-          scale={[-49.846, -61.268, -5.68]}
-          userData={{ isAnimated: true, name: 'hangar_door_L' }}
-        />
-        <mesh
-          name='hangar_door_R'
-          castShadow
-          receiveShadow
-          geometry={nodes.hangar_door_R.geometry}
-          material={materials.WHITE}
-          position={[-14.916, 0, -79.29]}
-          rotation={[-Math.PI, 0, 0]}
-          scale={[-49.846, -61.268, -5.68]}
-          userData={{ isAnimated: true, name: 'hangar_door_R' }}
-        />
+        <group name='hangar_door_R' userData={{ name: 'hangar_door_R' }}>
+          <mesh
+            name='hangar_door_R_1'
+            castShadow
+            receiveShadow
+            geometry={nodes.hangar_door_R_1.geometry}
+            material={materials.WHITE}
+            userData={{ isAnimated: true }}
+          />
+          <mesh
+            name='hangar_door_R_2'
+            castShadow
+            receiveShadow
+            geometry={nodes.hangar_door_R_2.geometry}
+            material={materials.hangarDoors_beams}
+            userData={{ isAnimated: true }}
+          />
+        </group>
+        <group name='hangar_door_L' userData={{ name: 'hangar_door_L' }}>
+          <mesh
+            name='hangar_door_R002'
+            castShadow
+            receiveShadow
+            geometry={nodes.hangar_door_R002.geometry}
+            material={materials.WHITE}
+            userData={{ isAnimated: true }}
+          />
+          <mesh
+            name='hangar_door_R002_1'
+            castShadow
+            receiveShadow
+            geometry={nodes.hangar_door_R002_1.geometry}
+            material={materials.hangarDoors_beams}
+            userData={{ isAnimated: true }}
+          />
+        </group>
       </group>
     </group>
   )

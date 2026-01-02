@@ -1,13 +1,3 @@
-// // machines/portfolioService.js
-// import { createActor } from 'xstate';
-// import portfolioMachine from './portfolioMachine.js';
-
-// // Create and start a global service
-// const portfolioService = createActor(portfolioMachine).start();
-
-// export default portfolioService
-
-
 import { createActor } from 'xstate';
 import portfolioMachine from './portfolioMachine.js';
 import p from '../lib/imported_utilities/helpers/consoleHelper';
