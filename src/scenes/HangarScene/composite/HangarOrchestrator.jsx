@@ -1,46 +1,43 @@
-// 2025-12-18 09:32
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { useFrame } from '@react-three/fiber'
+// 2026-01-07 03:38
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import * as THREE from 'three'
+import { useFrame } from '@react-three/fiber'
 
+import { FadeActorContext } from '@/actors/FadeActorContext'
 import { useInstructions } from '@/providers/InstructionsProvider'
-import p from '@/lib/imported_utilities/helpers/consoleHelper'
-import CameraFadePortal from '@/scenes/sharedComponents/overlays/CameraFadePortal'
-const SOURCE = 'HangarOrcestrator.jsx'
-const srcColor = [240, 76]
+
+const SOURCE = 'HangarOrchestrator.jsx'
 
 const HangarOrchestrator = forwardRef(function HangarOrchestrator(
-  { scene, nodes, materials, actions, cameraDirectorRef, requestFade, fadeMidpointRef, setFadeVisible },
+  { scene, actions, cameraDirectorRef, fadeMidpointRef },
   ref,
 ) {
   const { setInstructionsFor } = useInstructions()
 
+  // -------------------------------
+  // Global fade actor
+  // -------------------------------
+  const fadeActor = FadeActorContext.useActorRef()
+
+  // -------------------------------
+  // Local refs
+  // -------------------------------
   const api = useRef({})
-  const runwayLightsRef = useRef(scene.getObjectByName('runway_strip_lights'))
   const flashing = useRef(false)
-
-  // -------------------------------
-  // Fade orchestration state
-  // -------------------------------
-
-  const domain = 'hangar'
+  const runwayLightsRef = useRef(scene.getObjectByName('runway_strip_lights'))
 
   // -------------------------------
   // Orchestrator API
   // -------------------------------
   useEffect(() => {
-    //---------------------------------------------
-    // Hangar doors open
-    //---------------------------------------------
     api.current.openHangarDoors = () => {
       const doorAction = actions?.['hangarDoors_OpeningAction']
+      if (!doorAction) return
 
-      if (doorAction) {
-        doorAction.reset()
-        doorAction.setLoop(THREE.LoopOnce)
-        doorAction.clampWhenFinished = true
-        doorAction.play()
-      }
+      doorAction.reset()
+      doorAction.setLoop(THREE.LoopOnce)
+      doorAction.clampWhenFinished = true
+      doorAction.play()
 
       setTimeout(() => {
         api.current.showLaunchPrompt?.()
@@ -48,67 +45,68 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator(
       }, 2000)
     }
 
-    //---------------------------------------------
-    // Runway lights
-    //---------------------------------------------
     api.current.runwayLightsFlash = () => {
       flashing.current = true
     }
 
-    //---------------------------------------------
-    // Blimp movement
-    //---------------------------------------------
     api.current.moveBlimp = () => {
       const blimpMove = actions?.['BAKED_BlimpEmptyAction']
+      if (!blimpMove) return
 
-      if (blimpMove) {
-        blimpMove.reset()
-        blimpMove.setLoop(THREE.LoopOnce)
-        blimpMove.clampWhenFinished = true
-        blimpMove.play()
-      }
+      blimpMove.reset()
+      blimpMove.setLoop(THREE.LoopOnce)
+      blimpMove.clampWhenFinished = true
+      blimpMove.play()
     }
 
-    //---------------------------------------------
-    // Launch prompt + input
-    //---------------------------------------------
     api.current.showLaunchPrompt = () => {
-      setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: false })
+      setInstructionsFor({
+        domain: 'hangar',
+        stage: 'blimpMove',
+        fadeOut: false,
+      })
+
       window.addEventListener('keydown', handleLaunchKey)
     }
 
     const handleLaunchKey = (e) => {
       if (e.key !== 'w' && e.key !== 'W') return
 
-      // Start blimp motion
       api.current.moveBlimp?.()
 
-      // Schedule cinematic beat → fade
-      setTimeout(() => {
-        requestFade(() => {
-          cameraDirectorRef.current?.cutTo('outside1_camera_1')
-          // After switch, fade out
-          setTimeout(() => setFadeVisible(false), 2500)
+      // -------------------------------
+      // Fade → camera cut → fade in
+      // -------------------------------
+      setTimeout(()=>{
+        fadeActor.send({
+          type: 'START_FADE',
+          fadeType: 'SHORT',
+          onMidpoint: () => {
+            cameraDirectorRef.current?.cutTo('outside1_camera_1')
+          },
         })
-      }, 1750)
+      },2500)
 
-      setInstructionsFor({ domain, stage: 'blimpMove', fadeOut: true })
+      setInstructionsFor({
+        domain: 'hangar',
+        stage: 'blimpMove',
+        fadeOut: true,
+      })
+
       window.removeEventListener('keydown', handleLaunchKey)
     }
-  }, [actions, cameraDirectorRef, setInstructionsFor, requestFade, setFadeVisible])
+  }, [actions, cameraDirectorRef, fadeActor, setInstructionsFor])
 
   // -------------------------------
   // Runway light animation
   // -------------------------------
   useFrame(({ clock }) => {
     if (!flashing.current || !runwayLightsRef.current) return
+
     const t = clock.getElapsedTime()
     runwayLightsRef.current.emissiveIntensity = Math.abs(Math.sin(t / 2)) * 15 + 5
   })
 
-  // -------------------------------
-  // Expose orchestrator API
-  // -------------------------------
   useImperativeHandle(ref, () => api.current)
 
   return null

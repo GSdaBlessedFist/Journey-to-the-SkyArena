@@ -1,4 +1,4 @@
-@import '../../../../../app/mixins';
+@use './src/lib/imported_utilities/scss/mixins.scss';
 
 .sceneWrapper {
   @apply w-full h-screen;

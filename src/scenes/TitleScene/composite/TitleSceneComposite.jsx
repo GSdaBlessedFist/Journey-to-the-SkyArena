@@ -10,6 +10,7 @@ import { usePortfolio } from '../../../providers/PortfolioProvider'
 import { LIGHTS } from '../../../lib/helpers/getTimeOfDay'
 import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 import { Leva } from 'leva'
+import { PortfolioActorContext } from '@/actors/PortfolioActorContext.js'
 
 const SOURCE = 'TitleSceneComposite'
 const srcColor = [34, 34]
@@ -21,6 +22,8 @@ export default function TitleSceneComposite(props) {
   const { timeOfDay } = state
 
 
+  const hiScore = PortfolioActorContext.useSelector((state) => state.context.hiScore)
+  p(SOURCE, 26, srcColor, hiScore, 'hiScore')
   return (
     <group ref={group} {...props}>
       <Lights timeOfDay={timeOfDay} />
