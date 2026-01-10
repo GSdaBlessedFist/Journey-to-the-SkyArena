@@ -6,7 +6,6 @@ import Clouds from '../components/Clouds.jsx'
 // import Blimp from '../components/Blimp.jsx'
 import Lights from '../components/Lights.jsx'
 
-import { usePortfolio } from '../../../providers/PortfolioProvider'
 import { LIGHTS } from '../../../lib/helpers/getTimeOfDay'
 import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 import { Leva } from 'leva'
@@ -18,12 +17,12 @@ const srcColor = [34, 34]
 export default function TitleSceneComposite(props) {
   const group = useRef()
   const { nodes, materials } = useGLTF('/models/Scene_title.glb')
-  const { state } = usePortfolio()
-  const { timeOfDay } = state
+  const portfolioState = PortfolioActorContext.useSelector(state=>state);
+  const { timeOfDay } = portfolioState
 
 
-  const hiScore = PortfolioActorContext.useSelector((state) => state.context.hiScore)
-  p(SOURCE, 26, srcColor, hiScore, 'hiScore')
+  //const hiScore = PortfolioActorContext.useSelector((state) => state.context.hiScore)
+  p(SOURCE, 26, srcColor, portfolioState, 'portfolioState')
   return (
     <group ref={group} {...props}>
       <Lights timeOfDay={timeOfDay} />

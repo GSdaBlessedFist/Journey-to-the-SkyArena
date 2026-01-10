@@ -82,7 +82,7 @@ const HangarOrchestrator = forwardRef(function HangarOrchestrator(
           type: 'START_FADE',
           fadeType: 'SHORT',
           onMidpoint: () => {
-            cameraDirectorRef.current?.cutTo('outside1_camera_1')
+            cameraDirectorRef.current?.cutTo('outside2_camera_1')
           },
         })
       },2500)

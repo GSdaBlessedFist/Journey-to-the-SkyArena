@@ -20,7 +20,7 @@ import { FadeActorContext } from '@/actors/FadeActorContext'
 
 const SOURCE = 'HangarSceneComposite'
 
-export default function HangarSceneComposite({ fadeMidpointRef, ...props }) {
+export default function HangarSceneComposite({ props }) {
   const groupRef = useRef()
   const blimpRef = useRef()
   const cameraDirectorRef = useRef()
@@ -90,7 +90,6 @@ export default function HangarSceneComposite({ fadeMidpointRef, ...props }) {
         nodes={nodes}
         materials={materials}
         actions={actions}
-        fadeMidpointRef={fadeMidpointRef}
       />
 
       {/* Fade overlay */}

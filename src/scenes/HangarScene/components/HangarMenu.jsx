@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { usePortfolio } from '@/providers/PortfolioProvider'
 import p from '@/lib/imported_utilities/helpers/consoleHelper'
+import { PortfolioActorContext } from '@/actors/PortfolioActorContext'
 
 const SOURCE = 'HangarMENU'
 const srcColor = [140]
@@ -15,8 +15,7 @@ export default function HangarMenu({ nodes, materials, actions, onLiftoff }) {
     console.warn('[HangarMenu] nodes or materials not provided')
     return null
   }
-  const { goToTitle, goToHangar, goToOutside, goToChapterOne, goToChapterTwo, goToChapterThree, goToFinalProjectDemo } =
-    usePortfolio()
+  const portfolioState = PortfolioActorContext.useSelector(state=>state)
 
   //MENU ITEMS
   const menuItemWelcomeRef = useRef()

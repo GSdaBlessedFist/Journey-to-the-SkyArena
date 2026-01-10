@@ -37,8 +37,7 @@ const portfolioMachine = createMachine({
             on: {
                 SKIP_INTRO: 'idle',
                 SET_TIME_OF_DAY: {
-                    target: 'idle',
-                    actions: assign({ timeOfDay: (ctx, evt) => evt.value })
+                    actions: assign({ timeOfDay: ({ event }) => event.timeOfDay })
                 }
             }
         },
