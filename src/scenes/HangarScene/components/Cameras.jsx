@@ -4,7 +4,7 @@ import { PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 import p from '@/lib/imported_utilities/helpers/consoleHelper'
 
-const SOURCE = 'Cameras.jsx'
+const SOURCE = 'Cameras.jsx off'
 const srcColor = [140, 76]
 
 export default function Cameras({ cameraDirectorRef, ...props }) {

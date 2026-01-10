@@ -5,7 +5,7 @@ import { IoMoon, IoSunny } from 'react-icons/io5'
 import { useEffect } from 'react'
 import { PortfolioActorContext } from '@/actors/PortfolioActorContext'
 
-const SOURCE = 'TitlePlacard.jsx'
+const SOURCE = 'TitlePlacard.jsx off'
 const srcColor = [220, 45]
 export default function TitlePlacard() {
   const portfolioState = PortfolioActorContext.useSelector(state=>state);

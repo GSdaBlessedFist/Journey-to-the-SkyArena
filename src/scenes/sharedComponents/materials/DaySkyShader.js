@@ -3,6 +3,7 @@ import { ShaderMaterial } from 'three'
 import * as THREE from 'three'
 import { extend } from '@react-three/fiber'
 import { shaderMaterial } from '@react-three/drei'
+import { forwardRef } from 'react'
 
 // GLSL: vertex shader
 const vertexShader = `
@@ -32,8 +33,8 @@ void main() {
 
 const DaySkyShaderMaterial = shaderMaterial(
   {
-    colorBottom: [0.50196, 0.72549, 1.0],
-    colorTop: [0.97254902, 0.98431373, 1.0]
+    colorBottom: new THREE.Color(0.50196, 0.72549, 1.0),
+    colorTop: new THREE.Color(0.97254902, 0.98431373, 1.0)
   },
   vertexShader,
   fragmentShader,
@@ -44,9 +45,9 @@ const DaySkyShaderMaterial = shaderMaterial(
 
 extend({ DaySkyShaderMaterial })
 
-export function DaySkyMaterial(props) {
-  return <daySkyShaderMaterial attach="material" {...props} />
-}
+export const DaySkyMaterial = forwardRef((props, ref) => (
+  <daySkyShaderMaterial ref={ref} attach="material" {...props} />
+))
 
 export default DaySkyShaderMaterial
 

@@ -9,17 +9,7 @@ export default function Skybox({ lightSetting, spring }) {
   const meshRef = useRef()
   const materialRef = useRef()
 
-  // useFrame(() => {
-  //   if (materialRef.current) {
-  //     const bottom = new THREE.Color().set(spring.bgBottom.get())
-  //     const top = new THREE.Color().set(spring.bgTop.get())
-  //     materialRef.current.uniforms.colorBottom.value.copy(bottom)
-  //     materialRef.current.uniforms.colorTop.value.copy(top)
-  //     // materialRef.current.uniforms.colorBottom.value.setRGB(0, 0, 1)
-  //     // materialRef.current.uniforms.colorTop.value.setRGB(1, 1, 1)
-
-  //   }
-  // })
+  
   useFrame(() => {
     if (!materialRef.current) return
 

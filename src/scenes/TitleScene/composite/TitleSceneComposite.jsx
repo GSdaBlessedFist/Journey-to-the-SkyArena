@@ -11,7 +11,7 @@ import p from '../../../lib/imported_utilities/helpers/consoleHelper'
 import { Leva } from 'leva'
 import { PortfolioActorContext } from '@/actors/PortfolioActorContext.js'
 
-const SOURCE = 'TitleSceneComposite'
+const SOURCE = 'TitleSceneComposite off'
 const srcColor = [34, 34]
 
 export default function TitleSceneComposite(props) {

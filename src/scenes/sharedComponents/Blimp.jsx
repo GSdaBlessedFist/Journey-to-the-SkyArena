@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { useGLTF, PerspectiveCamera, useAnimations } from '@react-three/drei'
 import * as THREE from 'three'
 import p from '@/lib/imported_utilities/helpers/consoleHelper'
@@ -7,7 +7,7 @@ import { useFrame } from '@react-three/fiber'
 const SOURCE = 'Blimp.jsx off'
 const srcColor = [165, 45]
 
-export default function Blimp({scale = 1 }) {
+ const Blimp = forwardRef(({scale = 1 },ref)=>{
   const blimpRef = useRef()
   const { scene, nodes, materials, animations } = useGLTF('/models/Blimp.glb')
   const { actions } = useAnimations(animations, blimpRef)
@@ -786,6 +786,7 @@ export default function Blimp({scale = 1 }) {
       </group>
     </group>
   )
-}
+})
 
 useGLTF.preload('/models/Blimp.glb')
+export default Blimp

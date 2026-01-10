@@ -8,9 +8,7 @@ export default function Clouds({ nodes, materials, actions, ...props }) {
     console.warn('[Clouds] nodes or materials not provided')
     return null
   }
-  useEffect(()=>{
-    console.log("CLOUDS",materials)
-  })
+  
 
   return (
     <group {...props}>

@@ -37,7 +37,7 @@ export default function Page() {
   const currentLight = LIGHTS[timeOfDay] || getTimeOfDay().lightSetting
 
 
-  p(SOURCE,42,srcColor,portfolioState,"portfolioState")
+  //p(SOURCE,42,srcColor,portfolioState,"portfolioState")
 
   // 🔆 Use one spring object for all lighting-related values, including shader gradients
   const spring = useSpring({
