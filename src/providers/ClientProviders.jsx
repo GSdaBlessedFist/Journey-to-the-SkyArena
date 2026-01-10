@@ -7,12 +7,12 @@ import { InstructionsProvider } from './InstructionsProvider'
 
 export default function ClientProviders({ children }) {
   return (
-    <PortfolioActorContext.Provider>
-      <FadeActorContext.Provider>
-          <LevaProvider>
-            <InstructionsProvider>{children}</InstructionsProvider>
-          </LevaProvider>
-      </FadeActorContext.Provider>
-    </PortfolioActorContext.Provider>
+    <FadeActorContext.Provider>
+      <PortfolioActorContext.Provider>
+        <LevaProvider>
+          <InstructionsProvider>{children}</InstructionsProvider>
+        </LevaProvider>
+      </PortfolioActorContext.Provider>
+    </FadeActorContext.Provider>
   )
 }
